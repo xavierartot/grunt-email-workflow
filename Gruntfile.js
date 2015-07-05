@@ -13,6 +13,7 @@ module.exports = function(grunt) {
         // Re-usable filesystem paths (these shouldn't be modified)
         paths: {
           src:        'src',
+          css:        'css',
           src_img:    'src/img',
           dist:       'dist',
           dist_img:   'dist/img'
@@ -135,10 +136,16 @@ module.exports = function(grunt) {
 
         // Watches for changes to css or email templates then runs grunt tasks
         watch: {
+            options: {
+                livereload: true,
+                nospawn: true
+            },
+            livereload: {
+                files: ['dist/*.html', '<%= paths.src %>/css/scss/*', 'Gruntfile.js']
+            },
           files: ['<%= paths.src %>/css/scss/*','<%= paths.src %>/emails/*','<%= paths.src %>/layouts/*','<%= paths.src %>/partials/*','<%= paths.src %>/data/*'],
           tasks: ['default']
         },
-
 
 
 
@@ -260,6 +267,7 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     // Where we tell Grunt what to do when we type "grunt" into the terminal.
+    //grunt.registerTask('default', ['browserSync','sass','assemble','premailer','imagemin','replace:src_images']);
     grunt.registerTask('default', ['sass','assemble','premailer','imagemin','replace:src_images']);
 
     // Use grunt send if you want to actually send the email to your inbox
